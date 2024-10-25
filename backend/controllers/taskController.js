@@ -61,6 +61,26 @@ exports.deleteTaskById = async (req, res) => {
         res.status(500).json({message: "Internal Server Error!"})
     }
 }
+exports.updateTaskById = async (req, res) => {
+    const { title, description } = req.body;
+
+    try {
+        let task = await Task.findById(req.params.id);
+
+        if (!task) {
+            return res.status(404).json({ msg: 'Task not found' });
+        }
+
+        task.title = title || task.title;
+        task.description = description || task.description;
+
+        await task.save();
+        res.json(task);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+}
 
 
 
