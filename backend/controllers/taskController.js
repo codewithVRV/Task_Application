@@ -15,7 +15,43 @@ exports.createTask = async (req, res) => {
         res.json(task)
     }
     catch (err) {
-        console.error(err.message);
+        console.log("Error caught by getAllTasks", error)
         res.status(500).send('Server error');
     }
 }
+
+exports.getAllTasks = async (req, res) => {
+    try {
+        const tasks = await Task.find()
+        res.status(200).json(tasks)
+    }
+    catch(error) {
+        console.log("Error caught by getAllTasks", error)
+        res.status(500).json({message: "Failed to fetch the tasks"})
+    }
+}
+
+exports.getTaskById = async (req, res) => {
+    const {id} = req.params;
+    try{
+        const task = await Task.findById(id);
+        if(!task) {
+            return res.status(404).json({message: "Task Not Found!"})
+        }
+        res.status(200).json(task)
+    }
+    catch(error) {
+        console.log("error caught by geting single task", error)
+        res.status(500).json({message: "Internal Server Error!"})
+    }
+}
+
+
+
+
+
+
+
+
+
+
