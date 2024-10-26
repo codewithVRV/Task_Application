@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const [allTask, setAllTasks] = useState([]);
+  const [temp, setTemp] = useState(false)
 
   const fetchAllTask = async () => {
     try {
@@ -14,9 +16,20 @@ const Home = () => {
     }
   };
 
+  async function handleDeleteTask(id) {
+    try{
+        await axios.delete(`http://localhost:3000/api/tasks/${id}`)
+        setTemp(!temp)
+        toast.success("Task Deleted Successfully!")
+    }
+    catch(error) {
+        console.log("Error caught by deleting function", error)
+    }
+  }
+
   useEffect(() => {
     fetchAllTask();
-  }, []);
+  }, [temp]);
   return (
     <div className="flex justify-center flex-wrap gap-4 mt-12 mb-10">
       {allTask &&
@@ -35,10 +48,10 @@ const Home = () => {
                 {data.description}
               </p>
               <div>
-                <button className="bg-blue-500 px-4 font-semibold text-white py-2 rounded-md">
+                <button className="bg-green-500 px-4 font-semibold text-white py-2 rounded-md">
                   Edit
                 </button>
-                <button className="bg-blue-500 px-4 mx-4 font-semibold text-white py-2 rounded-md">
+                <button onClick={() => handleDeleteTask(data._id)} className="bg-red-500 px-4 mx-4 font-semibold text-white py-2 rounded-md">
                   Delete
                 </button>
                 <button className="bg-blue-500 px-4 mx-4 font-semibold text-white py-2 rounded-md">
