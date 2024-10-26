@@ -1,10 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-// const connectDB = require('./config/database');
-// const authRoutes = require('./routes/auth');
-// const pollRoutes = require('./routes/polls');
 const taskRoutes = require("./routes/taskRoutes")
+const authRoutes = require("./routes/auth")
 const connectDB = require('./config/database');
 
 const app = express();
@@ -23,12 +21,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.text())
 app.use(express.urlencoded({ extended: true }))
-// app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/auth', authRoutes);
 
-// const PORT = process.env.PORT || 5000;
-
-// app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 
 app.listen(3000, () => {

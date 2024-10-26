@@ -6,7 +6,8 @@ import toast from "react-hot-toast";
 const Home = () => {
   const [allTask, setAllTasks] = useState([]);
   const [temp, setTemp] = useState(false);
-  const [editingTaskId, setEditingTaskId] = useState(null); // New state to track which task is being edited
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [pendingTaskId, setPendingTaskId] = useState(null);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -42,6 +43,10 @@ const Home = () => {
     }
   }
 
+  function handlingState() {
+    setTemp(!temp);
+    setPendingTaskId(null)
+  }
   useEffect(() => {
     fetchAllTask();
   }, [temp]);
@@ -103,6 +108,7 @@ const Home = () => {
                       }); 
                     }
                   }}
+
                   className="bg-green-500 px-4 font-semibold text-white py-2 rounded-md"
                 >
                   {" "}
@@ -118,8 +124,17 @@ const Home = () => {
                    Delete {" "}
                 </button>
                 {" "}
-                <button className="bg-blue-500 px-4 mx-4 font-semibold text-white py-2 rounded-md">
-                 Pending{" "}
+                <button 
+                        onClick={() => {
+                            if(pendingTaskId == data._id){
+                                handlingState()
+                            }
+                            else {
+                                setPendingTaskId(data._id)
+                            }
+                        }}
+                    className="bg-blue-500 px-4 mx-4 font-semibold text-white py-2 rounded-md">
+                 {!temp ? "Pending" : "Completed"} {" "}
                 </button>
                 {" "}
               </div>

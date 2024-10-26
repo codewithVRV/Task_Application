@@ -1,16 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const SignUp = () => {
 
 
   const [signupFormData,  setSignupFormData] =  useState({
-    username:"", email: "", password: "",  usertype: "user"
+    name:"", email: "", password: "",  
   })
   const navigaor = useNavigate()
+
+  console.log("signup form data", signupFormData)
 
   function handleSignUp (e) {
     const {name, value} = e.target;
@@ -20,14 +22,14 @@ const SignUp = () => {
   async function handleSubmitData (e) {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/signup`, signupFormData, {
+      const response = await axios.post(`http://localhost:3000/api/auth/register`, signupFormData, {
         headers: {'Content-Type': 'application/json'},
       })
       console.log("response:", response)
       toast.success(response.data.message)
       navigaor("/signin")
       setSignupFormData({
-        username:"", email: "", password: "",  usertype: ""
+        name:"", email: "", password: "", 
       })
     } catch (error) {
       toast.error('Failed to Sign Up, please try again')
@@ -48,23 +50,13 @@ const SignUp = () => {
               type="text"
               id="name"
               onChange={handleSignUp}
-              name="username"
-              value={signupFormData.username}
+              name="name"
+              value={signupFormData.name}
               placeholder="Enter your name"
               className="w-full px-3 py-2 outline-none border rounded focus:outline-none focus:ring-orange-500 focus:border-orange-300"
             />
           </div>
-          {/* <div className="mb-4">
-            <label className="block  text-sm font-bold mb-2" htmlFor="image">
-                Upload Image
-            </label>
-            <input
-                type="file"
-                id="image"
-                accept="image/*"
-                className="w-full px-3 py-2 outline-none border rounded focus:outline-none focus:ring-orange-500 focus:border-orange-300"
-            />
-            </div> */}
+
 
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -106,9 +98,9 @@ const SignUp = () => {
           <div className="text-center">
             <p className="text-gray-700">
               Already have an account?{' '}
-              <a  to={"/signin"}   className="text-orange-500 hover:text-orange-700 font-bold">
+              <Link  to={"/signin"}   className="text-orange-500 hover:text-orange-700 font-bold">
                 Login
-              </a>
+              </Link>
             </p>
           </div>
         </form>
