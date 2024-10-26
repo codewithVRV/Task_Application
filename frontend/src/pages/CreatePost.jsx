@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CreatePost = () => {
     const [data, setData] = useState({
@@ -13,12 +14,12 @@ const CreatePost = () => {
         e.preventDefault()
         console.log("function called!")
         try{
-            const response = await axios.post("http://localhost:3000/api/tasks", data, {
+            await axios.post("http://localhost:3000/api/tasks", data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-            console.log(response)
+            toast.success("Task Created Successfully")
             navigator("/")
             
         }

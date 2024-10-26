@@ -2,6 +2,8 @@
 // import { Link } from "react-router-dom";
 // import "./Header.css";
 
+import { Link } from "react-router-dom";
+
 // import Sidebarcomp from "../Sidebar/Sidebar";
 // import { useContext, useState } from "react";
 // import UserContext from "../../contex/user";
@@ -39,10 +41,9 @@ function Header() {
         {/* Middle Part */}
 
         <div className=" text-white gap-10 text-xl hidden lg:flex">
-          <a to={"/"} className="hover:text-orange-500"  data-aos="flip-up">Home</a>
-          <a to={"/"} className="hover:text-orange-500"   data-aos="flip-down">About</a>
-          <a to={"/"} className="hover:text-orange-500"  data-aos="flip-up">Service</a>
-          <p className="hover:text-orange-500"  data-aos="flip-down">Contact</p>
+          <Link to={"/"} className="hover:text-orange-500"  data-aos="flip-up">Home</Link>
+          <Link to={"/"} className="hover:text-orange-500"   data-aos="flip-down">About</Link>
+          <Link to={"/post/create"} className="hover:text-orange-500"  data-aos="flip-up">Create Task Here!</Link>
         </div>
 
 
